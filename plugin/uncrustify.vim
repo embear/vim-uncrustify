@@ -35,7 +35,14 @@ endif
 
 " Define default "g:uncrustify_language_mapping" {{{2
 if !exists("g:uncrustify_language_mapping")
-  let g:uncrustify_language_mapping = { "c" : "c", "cpp": "cpp", "objc": "oc", "objcpp": "oc+", "cs": "cs", "java": "java" }
+  let g:uncrustify_language_mapping = {
+    \   "c"      : "c",
+    \   "cpp"    : "cpp",
+    \   "objc"   : "oc",
+    \   "objcpp" : "oc+",
+    \   "cs"     : "cs",
+    \   "java"   : "java"
+    \ }
 endif
 
 " Define default "g:uncrustify_debug" {{{2
@@ -69,7 +76,7 @@ function! s:UncrustifyPreserve(command)
   let @/ = l:search
 
   " Restore the previous window position.
-  call setpos('.', window_position)
+  call setpos('.', l:window_position)
   normal! zt
 
   " Restore the previous cursor position.
@@ -82,16 +89,22 @@ endfunction
 " Execute uncrustify for current buffer
 "
 function! Uncrustify()
-  let l:uncrustify_config_file_path = shellescape(fnamemodify(g:uncrustify_config_file, ':p'))
+  " try to get buffer local variables, use global variables as default
+  let l:uncrustify_command          = getbufvar(bufnr("%"), "uncrustify_command",          g:uncrustify_command)
+  let l:uncrustify_config_file      = getbufvar(bufnr("%"), "uncrustify_config_file",      g:uncrustify_config_file)
+  let l:uncrustify_language_mapping = getbufvar(bufnr("%"), "uncrustify_language_mapping", g:uncrustify_language_mapping)
 
-  if executable(g:uncrustify_command)
-    if has_key(g:uncrustify_language_mapping, &filetype)
-      let l:command = 
-            \   ':silent! %!' . g:uncrustify_command
+  " generate a absolute path of config file
+  let l:uncrustify_config_file_path = shellescape(fnamemodify(l:uncrustify_config_file, ':p'))
+
+  if executable(l:uncrustify_command)
+    if has_key(l:uncrustify_language_mapping, &filetype)
+      let l:command =
+            \   ':silent! %!' . l:uncrustify_command
             \ . ' -q '
-            \ . ' -l ' . g:uncrustify_language_mapping[&filetype]
+            \ . ' -l ' . l:uncrustify_language_mapping[&filetype]
             \ . ' -c ' . l:uncrustify_config_file_path
-      call s:UncrustifyDebug(1, "command " . command)
+      call s:UncrustifyDebug(1, "command " . l:command)
       call s:UncrustifyPreserve(l:command)
     else
       call s:UncrustifyError("No language mapping for filetype " . &filetype)
