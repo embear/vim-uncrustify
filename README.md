@@ -19,7 +19,7 @@ Run uncrustify on current buffer. This function can be used to add an
 autocommand that formats the code automatically on write.
 
 ``` {.vim}
-autocmd BufWritePre * if (&filetype == 'cpp') | call Uncrustify() | endif
+autocmd BufWritePre <buffer> if (&filetype == 'cpp') | call Uncrustify() | endif
 ```
 
 ## Settings
