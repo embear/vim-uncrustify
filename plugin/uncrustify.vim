@@ -89,28 +89,32 @@ endfunction
 " Execute uncrustify for current buffer
 "
 function! Uncrustify()
-  " try to get buffer local variables, use global variables as default
+  " Try to get buffer local variables, use global variables as default
   let l:uncrustify_command          = getbufvar(bufnr("%"), "uncrustify_command",          g:uncrustify_command)
   let l:uncrustify_config_file      = getbufvar(bufnr("%"), "uncrustify_config_file",      g:uncrustify_config_file)
   let l:uncrustify_language_mapping = getbufvar(bufnr("%"), "uncrustify_language_mapping", g:uncrustify_language_mapping)
 
-  " generate a absolute path of config file
+  " Generate a absolute path of config file
   let l:uncrustify_config_file_path = shellescape(fnamemodify(l:uncrustify_config_file, ':p'))
 
-  if executable(l:uncrustify_command)
-    if has_key(l:uncrustify_language_mapping, &filetype)
-      let l:command =
-            \   ':silent! %!' . l:uncrustify_command
-            \ . ' -q '
-            \ . ' -l ' . l:uncrustify_language_mapping[&filetype]
-            \ . ' -c ' . l:uncrustify_config_file_path
-      call s:UncrustifyDebug(1, "command " . l:command)
-      call s:UncrustifyPreserve(l:command)
+  if filereadable(l:uncrustify_config_file_path)
+    if executable(l:uncrustify_command)
+      if has_key(l:uncrustify_language_mapping, &filetype)
+        let l:command =
+              \   ':silent! %!' . l:uncrustify_command
+              \ . ' -q '
+              \ . ' -l ' . l:uncrustify_language_mapping[&filetype]
+              \ . ' -c ' . l:uncrustify_config_file_path
+        call s:UncrustifyDebug(1, "command " . l:command)
+        call s:UncrustifyPreserve(l:command)
+      else
+        call s:UncrustifyError("No language mapping for filetype '" . &filetype . "'")
+      endif
     else
-      call s:UncrustifyError("No language mapping for filetype " . &filetype)
+      call s:UncrustifyError("No uncrustify executable '" . l:uncrustify_command . "'")
     endif
   else
-    call s:UncrustifyError("No uncrustify executable")
+    call s:UncrustifyError("Configuration file '" . l:uncrustify_command . "' not readable")
   endif
 endfunction
 
