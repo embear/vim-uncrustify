@@ -13,4 +13,4 @@
 
 [Bitbucket]: https://bitbucket.org/embear/uncrustify
 [GitHub]: https://github.com/embear/vim-uncrustify
-[VIM online]: http://www.vim.org/scripts/script.php?script_id=441
+[VIM online]: http://www.vim.org/scripts/script.php?script_id=5684

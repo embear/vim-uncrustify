@@ -112,7 +112,7 @@ Credits ~
                                                          *uncrustify-changelog*
 Changelog ~
 
-v0.0.1 : XXXX-XX-XX
+v0.0.1 : 2018-05-15
 
 - initial release.
 
@@ -122,6 +122,6 @@ References ~
 
 [1] https://bitbucket.org/embear/uncrustify
 [2] https://github.com/embear/vim-uncrustify
-[3] http://www.vim.org/scripts/script.php?script_id=441
+[3] http://www.vim.org/scripts/script.php?script_id=5684
 
 vim: ft=help
