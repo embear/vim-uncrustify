@@ -95,7 +95,7 @@ function! Uncrustify()
   let l:uncrustify_language_mapping = getbufvar(bufnr("%"), "uncrustify_language_mapping", g:uncrustify_language_mapping)
 
   " Generate a absolute path of config file
-  let l:uncrustify_config_file_path = shellescape(fnamemodify(l:uncrustify_config_file, ':p'))
+  let l:uncrustify_config_file_path = fnamemodify(l:uncrustify_config_file, ':p')
 
   if filereadable(l:uncrustify_config_file_path)
     if executable(l:uncrustify_command)
@@ -114,7 +114,7 @@ function! Uncrustify()
       call s:UncrustifyError("No uncrustify executable '" . l:uncrustify_command . "'")
     endif
   else
-    call s:UncrustifyError("Configuration file '" . l:uncrustify_command . "' not readable")
+    call s:UncrustifyError("Configuration file '" . l:uncrustify_config_file_path . "' not readable")
   endif
 endfunction
 
