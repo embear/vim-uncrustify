@@ -97,8 +97,12 @@ function! Uncrustify()
   " Generate a absolute path of config file
   let l:uncrustify_config_file_path = fnamemodify(l:uncrustify_config_file, ':p')
 
-  if filereadable(l:uncrustify_config_file_path)
-    if executable(l:uncrustify_command)
+  call s:UncrustifyDebug(2, "executable: ".l:uncrustify_command)
+  call s:UncrustifyDebug(2, "configuration: ".l:uncrustify_config_file_path)
+  call s:UncrustifyDebug(2, "mapping: ".string(l:uncrustify_language_mapping))
+
+  if executable(l:uncrustify_command)
+    if filereadable(l:uncrustify_config_file_path)
       if has_key(l:uncrustify_language_mapping, &filetype)
         let l:command =
               \   ':silent! %!' . l:uncrustify_command
@@ -111,10 +115,10 @@ function! Uncrustify()
         call s:UncrustifyError("No language mapping for filetype '" . &filetype . "'")
       endif
     else
-      call s:UncrustifyError("No uncrustify executable '" . l:uncrustify_command . "'")
+      call s:UncrustifyError("Configuration file '" . l:uncrustify_config_file_path . "' not readable")
     endif
   else
-    call s:UncrustifyError("Configuration file '" . l:uncrustify_config_file_path . "' not readable")
+    call s:UncrustifyError("No uncrustify executable '" . l:uncrustify_command . "'")
   endif
 endfunction
 
