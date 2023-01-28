@@ -3,7 +3,7 @@
 This plugin provides functions and commands to ease the use of uncrustify
 within Vim.
 
-The plugin can be found on [Bitbucket], [GitHub] and [VIM online].
+The plugin can be found on [GitHub] and [VIM online].
 
 ## Commands
 
@@ -62,8 +62,8 @@ Debug level for this script.
 
 To contact the author (Markus Braun), please send an email to <markus.braun@krawel.de>
 
-If you think this plugin could be improved, fork on [Bitbucket] or [GitHub] and
-send a pull request or just tell me your ideas.
+If you think this plugin could be improved, fork on [GitHub] and send a pull
+request or just tell me your ideas.
 
 ## Credits
 
@@ -75,6 +75,5 @@ v0.0.1 : 2018-05-15
 
   - initial release.
 
-[Bitbucket]: https://bitbucket.org/embear/uncrustify
 [GitHub]: https://github.com/embear/vim-uncrustify
 [VIM online]: http://www.vim.org/scripts/script.php?script_id=5684
