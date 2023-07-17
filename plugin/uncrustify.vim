@@ -109,6 +109,13 @@ function! Uncrustify()
               \ . ' -q '
               \ . ' -l ' . l:uncrustify_language_mapping[&filetype]
               \ . ' -c ' . l:uncrustify_config_file_path
+        if (has("unix"))
+          " unix specific redirect of stderr
+          let l:command += '2>/dev/null'
+        else
+          " windows specific redirect of stderr
+          let l:command += '2>nul'
+        endif
         call s:UncrustifyDebug(1, "command " . l:command)
         call s:UncrustifyPreserve(l:command)
       else
